@@ -4,7 +4,7 @@
   connection: local
   become: true
   vars:
-    domain_definition: "{{ lookup('file','/root/file.json') | from_json}}"
+    domain_definition: "{{ lookup('file','file.json') | from_json}}"
 
   tasks:
     - name: Display all cluster names
