@@ -1,0 +1,25 @@
+---
+- hosts: vhost
+  gather_facts: false
+  connection: local
+  become: true
+  vars:
+    domain_definition: "{{ lookup('file','/root/file_backup_1.json') | from_json}}"
+
+  tasks:
+    - name: Display all cluster names
+      ansible.builtin.debug:
+        msg:  "{{  domain_definition  }}"
+
+    - name: Display all server names
+      ansible.builtin.debug:
+        msg: "{{ domain_definition | community.general.json_query('domain_definition.domain.server[*].name') }}"
+
+    - name: ping all server
+      ansible.builtin.ping: "{{ item }}"
+      loop: "{{ domain_definition | community.general.json_query('domain_definition.domain.server[*].name') }}"
+      register: output
+    
+    - name: debug the output of ping
+      debug:
+        msg: "{{ output }}"

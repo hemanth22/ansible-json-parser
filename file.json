@@ -1,0 +1,46 @@
+{
+    "domain_definition": {
+        "domain": {
+            "cluster": [
+                {
+                    "name": "cluster1"
+                },
+                {
+                    "name": "cluster2"
+                }
+            ],
+            "server": [
+                {
+                    "name": "bitroid.in",
+                    "cluster": "cluster1",
+                    "port": "8080"
+                },
+                {
+                    "name": "google.com",
+                    "cluster": "cluster1",
+                    "port": "8090"
+                },
+                {
+                    "name": "adobe.com",
+                    "cluster": "cluster2",
+                    "port": "9080"
+                },
+                {
+                    "name": "github.com",
+                    "cluster": "cluster2",
+                    "port": "9090"
+                }
+            ],
+            "library": [
+                {
+                    "name": "lib1",
+                    "target": "cluster1"
+                },
+                {
+                    "name": "lib2",
+                    "target": "cluster2"
+                }
+            ]
+        }
+    }
+}
