@@ -39,3 +39,5 @@ jobs:
         pip list
         python -V
         pip -V
+        ls -ltra
+        pwd
