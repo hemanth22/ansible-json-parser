@@ -41,3 +41,10 @@ jobs:
         pip -V
         ls -ltra
         pwd
+    - name: test ansible playbooks
+      run: |
+        ansible-playbook -i inventory jsonparser.playbook
+        ansible-playbook -i inventory jsonparser_backup.playbook
+        ansible-playbook -i inventory jsonparser_backup_1.playbook
+        ls -ltra
+        pwd
