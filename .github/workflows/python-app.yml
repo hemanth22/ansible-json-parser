@@ -43,8 +43,11 @@ jobs:
         pwd
     - name: test ansible playbooks
       run: |
+        echo "Basic Verion"
         ansible-playbook -i inventory jsonparser.playbook
+        echo "Version 2"
         ansible-playbook -i inventory jsonparser_backup.playbook
+        echo "Version 3"
         ansible-playbook -i inventory jsonparser_backup_1.playbook
         ls -ltra
         pwd
