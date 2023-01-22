@@ -1,0 +1,48 @@
+---
+- hosts: vhost
+  gather_facts: false
+  connection: local
+  become: true
+  vars:
+    domain_definition: "{{ lookup('file','good.json') | from_json}}"
+
+  tasks:
+    - name: Display all cluster names
+      ansible.builtin.debug:
+        msg:  "{{  domain_definition  }}"
+
+    - name: Display all server names
+      ansible.builtin.debug:
+        msg: "{{ domain_definition | community.general.json_query('domain_definition.domain.server[*].name') }}"
+
+    - name: Display all ports from cluster1
+      ansible.builtin.debug:
+        var: item
+      loop: "{{ domain_definition | community.general.json_query(server_name_cluster1_query) }}"
+      vars:
+        server_name_cluster1_query: "domain_definition.domain.server[?cluster=='cluster1'].port"
+
+    - name: Display all ports from cluster1 as a string
+      ansible.builtin.debug:
+        msg: "{{ domain_definition | community.general.json_query('domain_definition.domain.server[?cluster==`cluster1`].port') | join(', ') }}"
+
+
+    - name: Display all server ports and names from cluster1
+      ansible.builtin.debug:
+        var: item
+      loop: "{{ domain_definition | community.general.json_query(server_name_cluster1_query) }}"
+      vars:
+        server_name_cluster1_query: "domain_definition.domain.server[?cluster=='cluster1'].{servername: name, serverport: port, deploymentdir: deploy, backupdir: backup}"
+
+    - name: Display all server ports and names from cluster2
+      ansible.builtin.debug:
+        var: item
+      loop: "{{ domain_definition | community.general.json_query(server_name_cluster1_query) }}"
+      vars:
+        server_name_cluster1_query: "domain_definition.domain.server[?cluster=='cluster2'].{servername: name, serverport: port, deploymentdir: deploy, backupdir: backup}"
+
+    - name: Print all server names
+      debug:
+        msg: "{{ item }}"
+      with_items:
+      - "{{ server_name_cluster1_query }}"
