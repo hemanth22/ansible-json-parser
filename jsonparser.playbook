@@ -65,8 +65,9 @@
         msg: "{{ domain_definition | to_json | from_json | community.general.json_query(server_name_query) }}"
       vars:
         server_name_query: "domain_definition.domain.server[?contains(name,'server1')].port"
-        - name: Display all ports from cluster1
-  ansible.builtin.debug:
-    msg: "{{ domain_definition | to_json | from_json | community.general.json_query(server_name_query) }}"
-  vars:
-    server_name_query: "domain_definition.domain.server[?contains(name,'server1')].port"
+
+    - name: Display all ports from cluster1
+      ansible.builtin.debug:
+        msg: "{{ domain_definition | to_json | from_json | community.general.json_query(server_name_query) }}"
+      vars:
+        server_name_query: "domain_definition.domain.server[?contains(name,'server1')].port"
