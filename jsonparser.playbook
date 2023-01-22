@@ -30,7 +30,7 @@
       loop: "{{ domain_definition | community.general.json_query(server_name_cluster1_query) }}"
       vars:
         server_name_cluster1_query: "domain_definition.domain.server[?cluster=='cluster1'].port"
-	
+
     - name: Display all ports from cluster1 as a string
       ansible.builtin.debug:
         msg: "{{ domain_definition | community.general.json_query('domain_definition.domain.server[?cluster==`cluster1`].port') | join(', ') }}"
