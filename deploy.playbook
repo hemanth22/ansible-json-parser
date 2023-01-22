@@ -1,0 +1,28 @@
+---
+- hosts: vhost
+  gather_facts: false
+  connection: local
+  become: true
+  vars:
+    domain_definition: "{{ lookup('file','deploy.json') | from_json}}"
+
+  tasks:
+    - name: display all cluster names
+      ansible.builtin.debug:
+        msg: "{{  domain_definition  }}"
+
+    - name: display all server ports and names from cluster1
+      ansible.builtin.ping: "{{ item.name }}"
+      loop: "{{ domain_definition | community.general.json_query(server_name_cluster1_query) }}"
+      vars:
+        server_name_cluster1_query: "domain_definition.domain.server[?cluster=='cluster1'].{name: name, port: port, deploydir: deploy, backupdir: backup}"
+
+
+    - name: Download foo.conf
+      ansible.builtin.copy:
+        src: /etc/ssh/sshd_config
+        dest: "{{ item.deploydir }}"
+      delegate_to: "{{ item.name }}"
+      loop: "{{ domain_definition | community.general.json_query(server_name_cluster1_query) }}"
+      vars:
+        server_name_cluster1_query: "domain_definition.domain.server[?cluster=='cluster1'].{name: name, port: port, deploydir: deploy, backupdir: backup}"
