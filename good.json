@@ -1,0 +1,55 @@
+{
+    "domain_definition": {
+        "domain": {
+            "cluster": [
+                {
+                    "name": "cluster1"
+                },
+                {
+                    "name": "cluster2"
+                }
+            ],
+            "server": [
+                {
+                    "name": "uat1",
+                    "cluster": "cluster1",
+                    "port": "22",
+                    "deploy": "/root/apps/deployment/",
+                    "backup": "/root/backup/pullrequest1/root/apps/deployment/"
+                },
+                {
+                    "name": "uat2",
+                    "cluster": "cluster1",
+                    "port": "22",
+                    "deploy": "/root/apps/deployment/",
+                    "backup": "/root/backup/pullrequest1/root/apps/deployment/"
+
+                },
+                {
+                    "name": "sit1",
+                    "cluster": "cluster2",
+                    "port": "22",
+                    "deploy": "/root/apps/deployment/",
+                    "backup": "/root/backup/pullrequest1/root/apps/deployment/"
+                },
+                {
+                    "name": "sit2",
+                    "cluster": "cluster2",
+                    "port": "22",
+                    "deploy": "/root/apps/deployment/",
+                    "backup": "/root/backup/pullrequest1/root/apps/deployment/"
+                }
+            ],
+            "library": [
+                {
+                    "name": "lib1",
+                    "target": "cluster1"
+                },
+                {
+                    "name": "lib2",
+                    "target": "cluster2"
+                }
+            ]
+        }
+    }
+}
